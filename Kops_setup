@@ -7,8 +7,26 @@ kops create cluster \
   --master-size=t2.medium \
   --master-count=1
 
-
+####
 kops update cluster \
   --name=deepakram.k8s.local \
   --state=s3://backup.aws123 \
   --yes
+
+####
+kops update cluster --name=deepakram.k8s.local --state=s3://backup.aws123 --yes --admin
+
+
+####
+kops validate cluster --state=s3://backup.aws123
+
+
+####
+kops rolling-update cluster \
+  --name=deepakram.k8s.local \
+  --state=s3://backup.aws123 \
+  --yes
+
+
+####
+kubectl get nodes
