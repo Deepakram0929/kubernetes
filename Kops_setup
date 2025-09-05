@@ -62,7 +62,7 @@ kops rolling-update cluster \
 
 ####
 
-6. Copy the kubeconfig from your kOps admin machine
+6. Copy the kubeconfig from your kOps admin machine       To acces in master from created serevr
 cat ~/.kube/config
 scp ~/.kube/config ubuntu@<MASTER_IP>:/home/ubuntu/.kube/config
 
