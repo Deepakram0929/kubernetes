@@ -59,3 +59,10 @@ kops rolling-update cluster \
 
 5. Check nodes:
    kubectl get nodes
+
+####
+
+6. Copy the kubeconfig from your kOps admin machine
+cat ~/.kube/config
+scp ~/.kube/config ubuntu@<MASTER_IP>:/home/ubuntu/.kube/config
+
