@@ -3,7 +3,7 @@ Prequirements:
 2.create kops user in IAM and give admin permission
 3.lanuch ec2 instance
 4.aws configure secrets keys 
-5.ssh-keygen public and private keys to communicate
+5.ssh-keygen public and private keys to communicate  path  ls ./ssh
 
 ####
 // installl kubectl 
