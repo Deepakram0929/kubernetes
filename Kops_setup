@@ -66,3 +66,35 @@ kops rolling-update cluster \
 cat ~/.kube/config
 scp ~/.kube/config ubuntu@<MASTER_IP>:/home/ubuntu/.kube/config
 
+
+
+
+Kubernetes GUI
+
+1. If you want a GUI (like Rancher) Install the Kubernetes Dashboard:
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+2. Then create a service account and access token:
+  kubectl create serviceaccount admin-user -n kubernetes-dashboard
+
+kubectl create clusterrolebinding admin-user-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=kubernetes-dashboard:admin-user
+
+kubectl -n kubernetes-dashboard create token admin-user
+
+3. Access Dashboard
+   kubectl proxy
+
+4. Paste the token you generated with:
+   kubectl -n kubernetes-dashboard create token admin-user
+
+5. Use LoadBalancer (direct access)  Instead of proxy, expose Dashboard with a LoadBalancer:
+   kubectl -n kubernetes-dashboard edit service kubernetes-dashboard
+
+6. Change type: ClusterIP ➝ type: LoadBalancer.
+   kubectl -n kubernetes-dashboard get svc
+
+7. verfiy 
+   https://a479c8717c2494c6fbnbknlbfknzonlkzsd49e85e02-1489136487.us-east-1.elb.amazonaws.com:443
+
