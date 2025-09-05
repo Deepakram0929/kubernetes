@@ -66,8 +66,10 @@ kops rolling-update cluster \
 cat ~/.kube/config
 scp ~/.kube/config ubuntu@<MASTER_IP>:/home/ubuntu/.kube/config
 
+####
+7. To delete cluster
 
-
+kops delete cluster --name=deepakram.k8s.local --state=s3://backup.aws123 --yes
 
 Kubernetes GUI
 
