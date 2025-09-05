@@ -1,3 +1,5 @@
+step1 : kops command for creating your cluster:
+
 kops create cluster \
   --name=deepakram.k8s.local \
   --state=s3://backup.aws123 \
@@ -8,25 +10,28 @@ kops create cluster \
   --master-count=1
 
 ####
+2. Then apply the changes (this actually builds the cluster):
+
 kops update cluster \
   --name=deepakram.k8s.local \
   --state=s3://backup.aws123 \
   --yes
 
 ####
+3. Validate cluster (this checks when the API server and nodes are up):
+
 kops update cluster --name=deepakram.k8s.local --state=s3://backup.aws123 --yes --admin
 
 
 ####
-kops validate cluster --state=s3://backup.aws123
+4. Perform rolling update (to refresh instances and fully apply config):
 
-
-####
 kops rolling-update cluster \
   --name=deepakram.k8s.local \
   --state=s3://backup.aws123 \
   --yes
 
-
 ####
+
+5. Check nodes:
 kubectl get nodes
