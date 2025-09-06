@@ -49,7 +49,7 @@ kops update cluster \
 ####
 3. Validate cluster (this checks when the API server and nodes are up):
 
-kops validate cluster --name=deepakram.k8s.local --state=s3://backup.aws123 --yes --admin
+kops validate cluster --name=deepakram.k8s.local --state=s3://backup.aws123 
 
 
 ####
