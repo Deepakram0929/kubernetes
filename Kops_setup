@@ -52,6 +52,10 @@ kops update cluster \
 3. Validate cluster (this checks when the API server and nodes are up):
 
 kops validate cluster --name=deepakram.k8s.local --state=s3://backup.aws123 
+kops export kubeconfig --name=deepakram.k8s.local --state=s3://backup.aws123 --admin
+kubectl config view --minify | grep -A5 "user:"
+
+
 
 
 ####
