@@ -36,7 +36,9 @@ kops create cluster \
   --node-count=2 \
   --node-size=t2.micro \
   --master-size=t2.medium \
-  --master-count=1
+  --master-count=1 \
+  --ssh-public-key ~/.ssh/id_rsa.pub
+
 
 ####
 2. Then apply the changes (this actually builds the cluster):
