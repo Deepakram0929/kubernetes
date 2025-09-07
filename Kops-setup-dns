@@ -1,3 +1,32 @@
+Prequirements:
+1.create s3 bucket for backup
+2.create kops user in IAM and give admin permission
+3.lanuch ec2 instance
+4.aws configure secrets keys 
+5.ssh-keygen public and private keys to communicate  path  ls ./ssh
+
+####
+// installl kubectl 
+step 1: install kubectl
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+# and then append (or prepend) ~/.local/bin to $PATH
+sudo kubectl version --client
+
+#####
+// To install Kops :
+
+curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x kops
+sudo mv kops /usr/local/bin/kops
+
+
 1. To create a cluser
 kops create cluster \
   --name=k8s.deepakdr.site \
