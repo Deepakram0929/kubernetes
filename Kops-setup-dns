@@ -1,5 +1,4 @@
 1. To create a cluser
-
 kops create cluster \
   --name=k8s.deepakdr.site \
   --state=s3://backup.aws123 \
@@ -14,7 +13,6 @@ kops create cluster \
 
 
 2. To start the cluster update
-
 kops update cluster \
   --name=k8s.deepakdr.site \
   --state=s3://backup.aws123 \
@@ -23,15 +21,51 @@ kops update cluster \
 
 
 3. To validate the cluster is ready or not
-
 kops validate cluster \
   --name=k8s.deepakdr.site \
   --state=s3://backup.aws123
 
 
-4. To delete the cluster 
+4. Rollback update Terminates and replaces instances (control plane + nodes) one by one
+kops rolling-update cluster \
+  --name=deepakram.k8s.local \
+  --state=s3://backup.aws123 \
+  --yes
 
+
+5. To delete the cluster 
 kops delete cluster \
   --name=k8s.deepakdr.site \
   --state=s3://backup.aws123 \
   --yes
+
+Optional UGI K8S
+
+1. If you want a GUI (like Rancher) Install the Kubernetes Dashboard:
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+2. Use LoadBalancer (direct access)  Instead of proxy, expose Dashboard with a LoadBalancer: Change type: ClusterIP ➝ type: LoadBalancer.
+   kubectl -n kubernetes-dashboard edit service kubernetes-dashboard
+
+3. Check LoadBalancer Status
+   kubectl -n kubernetes-dashboard get svc 
+  or
+   kubectl -n kubernetes-dashboard get svc kubernetes-dashboard
+
+4. Then create a service account and access token:
+   kubectl create serviceaccount admin-user -n kubernetes-dashboard
+   
+5. Bind it to cluster-admin 
+    kubectl create clusterrolebinding admin-user-binding \
+    --clusterrole=cluster-admin \
+    --serviceaccount=kubernetes-dashboard:admin-user
+
+6. Get the login token
+   kubectl -n kubernetes-dashboard create token admin-user
+
+7. Access Dashboard Open the ELB DNS you got after changing the service to LoadBalancer:
+   kubectl -n kubernetes-dashboard get svc kubernetes-dashboard
+
+
+url verify
+https://a479c8717c2494c6fbnbknlbfknzonlkzsd49e85e02-1489136487.us-east-1.elb.amazonaws.com:443
