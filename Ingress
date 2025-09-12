@@ -9,8 +9,8 @@
 # Create controller
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.3/deploy/static/provider/aws/deploy.yaml
 
-# Create Deployment
-vim vprodep.yaml
+1.Create Deployment
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,7 +34,8 @@ spec:
 kubectl apply -f vprodep.yaml
 
 
-# Create service
+2. Create service
+ 
 vim vprosvc.yaml
 apiVersion: v1
 kind: Service
@@ -55,15 +56,15 @@ kubectl get svc
 kubectl describe svc my-app
 
 
-# Create DNS Cname Record for LB
+3. Create DNS Cname Record for LB
 Go to your domain hosted records
 Add CNAME record
 hostname => Load balancer Endpoint URL
 
 
-# Create Ingress
-vim vproingress.yaml
+4. Create Ingress
 
+apiVersion: networking.k8s.io/v
 kind: Ingress
 metadata:
   name: vpro-ingress
