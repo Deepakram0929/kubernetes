@@ -40,6 +40,23 @@ kops create cluster \
   --control-plane-volume-size=12 \
   --ssh-public-key=~/.ssh/id_rsa.pub
 
+or
+
+kops create cluster \
+  --name=k8s.deepakdr.site \
+  --state=s3://backup.aws123 \
+  --zones=us-east-1a,us-east-1b \
+  --node-count=2 \
+  --node-size=t2.micro \
+  --control-plane-size=t3.medium \
+  --dns-zone=deepakdr.site \
+  --node-volume-size=12 \
+  --control-plane-volume-size=12 \
+  --ssh-public-key=~/.ssh/id_rsa.pub \
+  --topology=public \
+  --api-loadbalancer-type=Public
+
+
 
 2. To start the cluster update
 kops update cluster \
