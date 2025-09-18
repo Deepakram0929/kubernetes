@@ -53,10 +53,11 @@ kops create cluster \
   --node-volume-size=12 \
   --control-plane-volume-size=12 \
   --ssh-public-key=~/.ssh/id_rsa.pub \
-  --topology=public \
-  --api-loadbalancer-type=public
+  --topology public \
+  --api-loadbalancer-type public
 
 
+kops export kubeconfig --name=k8s.deepakdr.site --state=s3://backup.aws123 --admin
 
 
 2. To start the cluster update
