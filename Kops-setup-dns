@@ -54,7 +54,8 @@ kops create cluster \
   --control-plane-volume-size=12 \
   --ssh-public-key=~/.ssh/id_rsa.pub \
   --topology=public \
-  --api-loadbalancer-type=Public
+  --api-loadbalancer-type=public
+
 
 
 
