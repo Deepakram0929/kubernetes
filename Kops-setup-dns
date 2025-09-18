@@ -52,9 +52,7 @@ kops create cluster \
   --dns-zone=deepakdr.site \
   --node-volume-size=12 \
   --control-plane-volume-size=12 \
-  --ssh-public-key=~/.ssh/id_rsa.pub \
-  --topology public \
-  --api-loadbalancer-type public
+  --ssh-public-key=~/.ssh/id_rsa.pub
 
 
 kops export kubeconfig --name=k8s.deepakdr.site --state=s3://backup.aws123 --admin
