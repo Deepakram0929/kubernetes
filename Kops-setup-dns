@@ -115,3 +115,11 @@ Optional UGI K8S
 
 url verify
 https://a479c8717c2494c6fbnbknlbfknzonlkzsd49e85e02-1489136487.us-east-1.elb.amazonaws.com:443
+
+
+
+
+export KOPS_STATE_STORE=s3://backup.aws123
+kops get cluster k8s.deepakdr.site -o yaml | grep -A 5 loadBalancer
+kops get cluster k8s.deepakdr.site --state=s3://backup.aws123 -o yaml | grep -A 5 loadBalancer
+
