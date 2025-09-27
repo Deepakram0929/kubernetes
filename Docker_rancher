@@ -1,0 +1,33 @@
+1. Install Docker 
+   yum install docker -y
+   systemctl enable docker
+   systemctl start docker
+   systemctl status docker
+   sudo systemctl enable --now docker
+   docker --version
+
+2. install kubectl
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+  echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  chmod +x kubectl
+  mkdir -p ~/.local/bin
+  mv ./kubectl ~/.local/bin/kubectl
+  # and then append (or prepend) ~/.local/bin to $PATH
+  sudo kubectl version --client 
+
+3. user added to docker group
+   sudo usermod -aG docker $USER
+
+4. Pull Rancher image
+   sudo docker pull rancher/rancher:latest
+
+5. Run docker image container
+   sudo docker run -d --privileged   --name rancher   -p 80:80 -p 443:443   rancher/rancher:latest
+
+6. List the docker containers
+   sudo docker ps
+
+7. Docker rancher logs
+   sudo docker logs -f ranche
