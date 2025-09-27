@@ -1,0 +1,13 @@
+To create Namespace
+    kubectl create namespace cattle-system
+
+1. Export the namespace JSON
+   kubectl get namespace cattle-system -o json > cattle-system.json
+2. Edit the JSON
+   "spec": {
+    "finalizers": []
+    }
+3. Force Kubernetes to finalize deletion
+   kubectl replace --raw "/api/v1/namespaces/cattle-system/finalize" -f ./cattle-system.json
+4. kubectl get ns
+
