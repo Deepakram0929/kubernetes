@@ -1,0 +1,30 @@
+# Download the latest stable Helm release
+curl https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz -o helm-v3.12.0-linux-amd64.tar.gz
+
+# Extract the downloaded file
+tar -zxvf helm-v3.12.0-linux-amd64.tar.gz
+
+# Move the helm binary to a directory in your PATH (e.g., /usr/local/bin)
+sudo mv linux-amd64/helm /usr/local/bin/helm
+
+# Verify the installation
+helm version
+
+or
+
+1. curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+2. helm version
+3. helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --create-namespace \
+  --set hostname=rancher.3.84.97.131.nip.io \
+  --set replicas=1
+4. kubectl -n cattle-system get svc rancher
+5. helm list    // List all Helm releases in the current namespace
+6. helm list -n cattle-system     // List Helm releases in a specific namespace
+7. helm list --all-namespaces   // List Helm releases across all namespaces
+8. helm list -n cattle-system   // Verify Helm release is gone
+
+
+
+ 
