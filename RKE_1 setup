@@ -1,0 +1,39 @@
+Requirements:
+   1. Control plane t2.medium 2cp, 2gb ram
+   2. 2 workers nodes
+
+SSH Permission:
+chmod 600 ram.pem
+ssh-keygen
+chmod 600 
+
+step1: install docker in all servers
+
+#!/bin/bash
+sudo apt update -y
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker ubuntu
+newgrp docker
+docker --version
+
+
+step2: Download RKE binary in masterplane or local
+
+RKE installtion:
+
+#!/bin/bash
+wget https://github.com/rancher/rke/releases/download/v1.8.7/rke_linux-amd64 -O rke
+chmod +x rke
+sudo mv rke /usr/local/bin/rke
+rke --version
+
+step2: Rancher Images:
+
+kubernetes: rke-extended-life/hyperkube:v1.32.8-rancher1
+kubernetes: rancher/hyperkube:v1.27.14-rancher1
+
+
+
