@@ -30,10 +30,32 @@ chmod +x rke
 sudo mv rke /usr/local/bin/rke
 rke --version
 
-step2: Rancher Images:
+step3: Rancher Images:
 
 kubernetes: rke-extended-life/hyperkube:v1.32.8-rancher1
 kubernetes: rancher/hyperkube:v1.27.14-rancher1
 
+step 4: install kubectl
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+# and then append (or prepend) ~/.local/bin to $PATH
+sudo kubectl version --client
+
+step:5
+export KUBECONFIG=./kube_config_cluster.yml
+kubectl get nodes
+kubectl get pods -A
 
 
+step:6 Deploy Rancher on Your Cluster
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+Add Rancher repo:
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm repo update
