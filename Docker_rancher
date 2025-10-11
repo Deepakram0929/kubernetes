@@ -31,3 +31,16 @@
 
 7. Docker rancher logs
    sudo docker logs -f ranche
+
+######################################
+
+Rancher GUI
+
+1. curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+2. helm version
+3. helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --create-namespace \
+  --set hostname=rancher.3.84.97.131.nip.io \
+  --set replicas=1
+4. kubectl -n cattle-system get svc rancher
