@@ -2,6 +2,8 @@ Requirements
    1. Control plane t2.medium 2cp, 2gb ram
    2. 2 workers nodes
 
+chmod 600 ram.pem
+
 step1: install docker in all servers
 
 sudo apt update
