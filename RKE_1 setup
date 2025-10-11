@@ -47,15 +47,58 @@ mv ./kubectl ~/.local/bin/kubectl
 # and then append (or prepend) ~/.local/bin to $PATH
 sudo kubectl version --client
 
-step:5
+###
+step:5 To copy config file
+scp -i "deep.pem" ./kube_config_cluster.yml ubuntu@54.157.215.567:~/kube_config_cluster.yml
+
+###
+step:6
 export KUBECONFIG=./kube_config_cluster.yml
 kubectl get nodes
 kubectl get pods -A
 
+########################################
 
-step:6 Deploy Rancher on Your Cluster
-curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+Rancher GUI Installation:
 
-Add Rancher repo:
-helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+
+step:7 Install Cert-Manager CRDs
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.crds.yaml
+
+
+Step 8: Create Namespace and Install Cert-Manager
+kubectl create namespace cert-manager
+
+helm repo add jetstack https://charts.jetstack.io
 helm repo update
+
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.16.2
+
+Check pods:
+kubectl get pods -n cert-manager
+
+step 9: Install Rancher
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system-1 \
+  --create-namespace \
+  --set hostname=rancher.3.84.97.131.nip.io \
+  --set replicas=1
+
+Check Rancher pods:
+kubectl get pods -n cattle-system-1
+Check Pod Logs (Optional):
+kubectl logs -f rancher-679d7f5d94-kz2df -n cattle-system-1
+https://rancher.3.84.971.331.nip.io
+
+
+step 10: Rancher generates a bootstrap admin password in a secret. Get it with:
+kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
+
+
+step11: Verify Cluster and Services
+kubectl get pods -A
+kubectl get svc -n cattle-system-1
+
+
