@@ -101,4 +101,10 @@ step11: Verify Cluster and Services
 kubectl get pods -A
 kubectl get svc -n cattle-system-1
 
+step 12: Find Which Pods Are Running on Which Node
+kubectl get pods -n cattle-system-1 -o wide
 
+
+step 13: Change to NodePort (Quick & Easy
+kubectl -n cattle-system-1 patch svc rancher -p '{"spec": {"type": "NodePort"}}'
+kubectl -n cattle-system-1 get svc rancher
