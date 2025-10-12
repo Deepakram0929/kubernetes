@@ -99,7 +99,7 @@ helm install rancher rancher-stable/rancher \
   --set replicas=1
 
 Check Pod Logs (Optional):
-kubectl logs -f rancher-679d7f5d94-kz2df -n cattle-system-1
+kubectl logs -f -n cattle-system deployment/rancher
 https://rancher.3.84.971.331.nip.io
 
 ###
