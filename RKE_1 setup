@@ -115,7 +115,7 @@ kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.b
 
 Verify Cluster and Services:
 kubectl get pods -A
-kubectl get svc -n cattle-system-1
+kubectl get svc -n cattle-system
 
 ###
 Rancher Uninstall: 
