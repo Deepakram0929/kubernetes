@@ -6,7 +6,7 @@ SSH Permission:
 chmod 600 ram.pem
 ssh-keygen
 chmod 600 
-
+###
 step1: install docker in all servers
 
 #!/bin/bash
@@ -19,9 +19,9 @@ sudo usermod -aG docker ubuntu
 newgrp docker
 docker --version
 
-
+###
 step2: Download RKE binary in masterplane or local
-
+###
 RKE installtion:
 
 #!/bin/bash
@@ -30,11 +30,13 @@ chmod +x rke
 sudo mv rke /usr/local/bin/rke
 rke --version
 
+###
 step3: Rancher Images:
 
 kubernetes: rke-extended-life/hyperkube:v1.32.8-rancher1
 kubernetes: rancher/hyperkube:v1.27.14-rancher1
 
+###
 step 4: install kubectl
 
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -62,49 +64,69 @@ kubectl get pods -A
 Rancher GUI Installation:
 
 
-step:7 Install Cert-Manager CRDs
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.crds.yaml
+step:7 Install Helm (v3)
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm version
 
-
-Step 8: Create Namespace and Install Cert-Manager
+###
+Step 8: Install cert-manager (for HTTPS)
 kubectl create namespace cert-manager
-
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-
 helm install cert-manager jetstack/cert-manager \
   --namespace cert-manager \
-  --version v1.16.2
+  --version v1.12.3 \
+  --set installCRDs=true
+kubectl get pods -n cert-manager
 
 Check pods:
 kubectl get pods -n cert-manager
 
-step 9: Install Rancher
-helm install rancher rancher-latest/rancher \
-  --namespace cattle-system-1 \
-  --create-namespace \
-  --set hostname=rancher.3.84.97.131.nip.io \
-  --set replicas=1
+###
+step 9: Add Rancher Helm Repo
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm repo update
 
-Check Rancher pods:
-kubectl get pods -n cattle-system-1
+###
+step 10: Rancher generates a bootstrap admin password in a secret. Get it with:
+kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
+
+###
+step11: Create Namespace for Rancher
+kubectl create namespace cattle-system
+
+###
+step 12: Install Rancher
+helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.3.84.97.131.nip.io\
+  ----set replicas=1
+
 Check Pod Logs (Optional):
 kubectl logs -f rancher-679d7f5d94-kz2df -n cattle-system-1
 https://rancher.3.84.971.331.nip.io
 
+###
+step 13: Wait for Rancher to Start
+kubectl -n cattle-system get pods
 
-step 10: Rancher generates a bootstrap admin password in a secret. Get it with:
+###
+Step 14: Access Rancher GUI
+kubectl -n cattle-system get svc rancher
+
+Rancher generates a bootstrap admin password in a secret. Get it with:
 kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
 
-
-step11: Verify Cluster and Services
+Verify Cluster and Services:
 kubectl get pods -A
 kubectl get svc -n cattle-system-1
 
-step 12: Find Which Pods Are Running on Which Node
-kubectl get pods -n cattle-system-1 -o wide
+###
+Rancher Uninstall: 
+helm uninstall rancher -n cattle-system
+kubectl delete namespace cattle-system
 
-
-step 13: Change to NodePort (Quick & Easy
+###
+step 15: Change to NodePort (Quick & Easy
 kubectl -n cattle-system-1 patch svc rancher -p '{"spec": {"type": "NodePort"}}'
 kubectl -n cattle-system-1 get svc rancher
