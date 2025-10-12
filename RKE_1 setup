@@ -96,7 +96,7 @@ step 11: Install Rancher
 helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=rancher.3.84.97.131.nip.io\
-  ----set replicas=1
+  --set replicas=1
 
 Check Pod Logs (Optional):
 kubectl logs -f rancher-679d7f5d94-kz2df -n cattle-system-1
