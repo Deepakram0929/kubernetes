@@ -88,15 +88,11 @@ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 helm repo update
 
 ###
-step 10: Rancher generates a bootstrap admin password in a secret. Get it with:
-kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
-
-###
-step11: Create Namespace for Rancher
+step10: Create Namespace for Rancher
 kubectl create namespace cattle-system
 
 ###
-step 12: Install Rancher
+step 11: Install Rancher
 helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=rancher.3.84.97.131.nip.io\
@@ -107,11 +103,11 @@ kubectl logs -f rancher-679d7f5d94-kz2df -n cattle-system-1
 https://rancher.3.84.971.331.nip.io
 
 ###
-step 13: Wait for Rancher to Start
+step 12: Wait for Rancher to Start
 kubectl -n cattle-system get pods
 
 ###
-Step 14: Access Rancher GUI
+Step 13: Access Rancher GUI
 kubectl -n cattle-system get svc rancher
 
 Rancher generates a bootstrap admin password in a secret. Get it with:
@@ -127,6 +123,6 @@ helm uninstall rancher -n cattle-system
 kubectl delete namespace cattle-system
 
 ###
-step 15: Change to NodePort (Quick & Easy
+step 14: Change to NodePort (Quick & Easy
 kubectl -n cattle-system-1 patch svc rancher -p '{"spec": {"type": "NodePort"}}'
 kubectl -n cattle-system-1 get svc rancher
