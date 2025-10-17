@@ -59,6 +59,8 @@ scp -i "deep.pem" ./kube_config_cluster.yml ubuntu@54.157.215.567:~/kube_config_
 
 ###
 step:6
+sudo chown ubuntu:ubuntu kube_config_cluster.yml
+chmod 600 kube_config_cluster.yml
 export KUBECONFIG=./kube_config_cluster.yml
 kubectl get nodes
 kubectl get pods -A
