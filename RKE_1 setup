@@ -35,6 +35,10 @@ step3: Rancher Images:
 
 kubernetes: rke-extended-life/hyperkube:v1.32.8-rancher1
 kubernetes: rancher/hyperkube:v1.27.14-rancher1
+kubernetes_version: "v1.25.16-rancher2-1"
+kubernetes: rancher/hardened-kubernetes:v1.27.14-rancher1-1
+rancher/hyperkube:v1.27.14-rancher1
+
 
 ###
 step 4: install kubectl
