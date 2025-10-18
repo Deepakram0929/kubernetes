@@ -92,7 +92,7 @@ kubectl get pods -n cert-manager
 
 helm install rancher rancher-latest/rancher \
   --namespace cattle-system \
-  --set hostname=rancher.18.207.155.93.nip.io \
+  --set hostname=rancher.18.297.155.93.nip.io \
   --set replicas=1
 
 ###
@@ -119,7 +119,7 @@ Step 13: Access Rancher GUI
 kubectl -n cattle-system get svc rancher
 
 Rancher generates a bootstrap admin password in a secret. Get it with:
-kubectl get secret -n cattle-system-1 bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
+kubectl get secret -n cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword | base64decode}}{{"\n"}}'
 
 Verify Cluster and Services:
 kubectl get pods -A
@@ -132,5 +132,5 @@ kubectl delete namespace cattle-system
 
 ###
 step 14: Change to NodePort (Quick & Easy
-kubectl -n cattle-system-1 patch svc rancher -p '{"spec": {"type": "NodePort"}}'
-kubectl -n cattle-system-1 get svc rancher
+kubectl -n cattle-system patch svc rancher -p '{"spec": {"type": "NodePort"}}'
+kubectl -n cattle-system get svc rancher
