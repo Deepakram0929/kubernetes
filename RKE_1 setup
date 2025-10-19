@@ -90,11 +90,6 @@ helm install cert-manager jetstack/cert-manager \
 Check pods:
 kubectl get pods -n cert-manager
 
-helm install rancher rancher-latest/rancher \
-  --namespace cattle-system \
-  --set hostname=rancher.18.297.155.93.nip.io \
-  --set replicas=1
-
 ###
 step 11: Install Rancher
 kubectl create namespace cattle-system
