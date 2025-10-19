@@ -129,3 +129,11 @@ kubectl delete namespace cattle-system
 step 14: Change to NodePort (Quick & Easy
 kubectl -n cattle-system patch svc rancher -p '{"spec": {"type": "NodePort"}}'
 kubectl -n cattle-system get svc rancher
+
+
+
+helm uninstall rancher -n cattle-system
+helm uninstall cert-manager -n cert-manager
+kubectl delete namespace cattle-system --wait=false
+kubectl delete namespace cert-manager --wait=false
+
