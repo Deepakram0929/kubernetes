@@ -132,9 +132,11 @@ kubectl -n cattle-system patch svc rancher -p '{"spec": {"type": "NodePort"}}'
 kubectl -n cattle-system get svc rancher
 
 
+helm uninstall rancher -n cattle-system --no-hooks || true
+helm uninstall cert-manager -n cert-manager --no-hooks || true
 
 helm uninstall rancher -n cattle-system
 helm uninstall cert-manager -n cert-manager
-kubectl delete namespace cattle-system --wait=false
-kubectl delete namespace cert-manager --wait=false
+kubectl delete namespace cattle-system --grace-period=0 --force
+kubectl delete namespace cert-manager --grace-period=0 --force
 
