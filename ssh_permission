@@ -1,3 +1,36 @@
+nano /home/deepak/.ssh/id_rsa_rke
+chmod 600 /home/deepak/.ssh/id_rsa_rke
+/home/deepak/.ssh/id_rke
+
+
+
+ssh-copy-id -i ~/.ssh/id_rsa_rke.pub deepak@192.168.31
+ssh-copy-id -i ~/.ssh/id_rsa_rke.pub deepak@192.168.31
+
+
+
+mkdir -p /home/deepak/.ssh
+cat /root/.ssh/id_ed25519.pub >> /home/deepak/.ssh/authorized_keys
+chown -R deepak:deepak /home/deepak/.ssh
+chmod 700 /home/deepak/.ssh
+chmod 600 /home/deepak/.ssh/authorized_keys
+
+
+
+
+
+
+
+
+
+
+##execute
+
+nano /home/deepak/.ssh/id_rsa_rke
+chmod 600 /home/deepak/.ssh/id_rsa_rke
+/home/deepak/.ssh/id_rke
+
+
 cat /root/.ssh/id_rsa_rke.pub >> /root/.ssh/authorized_keys
 chmod 600 /root/.ssh/authorized_keys
 
